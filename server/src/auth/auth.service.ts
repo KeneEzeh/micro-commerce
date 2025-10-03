@@ -33,7 +33,6 @@ export class AuthService {
   async login(email: string, password: string) {
     try {
       const user = await this.users.findByEmail(email);
-      console.log("Here", user);
       if (!user) throw new UnauthorizedException("Invalid credentials");
       const ok = await user.comparePassword(password);
       if (!ok) throw new UnauthorizedException("Invalid credentials");
@@ -44,6 +43,7 @@ export class AuthService {
       };
       return { accessToken: this.jwt.sign(payload) };
     } catch (error) {
+      console.log(error);
       throw new InternalServerErrorException(error);
     }
   }

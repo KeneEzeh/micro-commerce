@@ -1,4 +1,12 @@
-import { Controller, Post, Body, UseGuards, Req, Param } from "@nestjs/common";
+import {
+  Controller,
+  Post,
+  Body,
+  UseGuards,
+  Req,
+  Param,
+  Get,
+} from "@nestjs/common";
 import { OrdersService } from "./orders.service";
 import { JwtAuthGuard } from "../auth/jwt.guard";
 import { GetUser } from "../utils/decorators/get-user.decorator";
@@ -13,5 +21,12 @@ export class OrdersController {
   @Post()
   create(@Req() req: Request) {
     return this.svc.create(req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get()
+  getOrders(@Req() req: Request) {
+    const res = this.svc.getOrders(req.user.id);
+    return res;
   }
 }

@@ -5,7 +5,7 @@ import { Product } from "./products/product.entity";
 
 const AppDataSource = new DataSource({
   type: "sqlite",
-  database: process.env.DB_PATH || "db.sqlite",
+  database: process.env.DB_PATH,
   entities: [User, Product],
   synchronize: true,
 });

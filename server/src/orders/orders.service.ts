@@ -95,4 +95,11 @@ export class OrdersService {
       await queryRunner.release();
     }
   }
+
+  async getOrders(userId: string) {
+    return await this.repo.find({
+      where: { user: { id: userId } },
+      relations: ["items"],
+    });
+  }
 }

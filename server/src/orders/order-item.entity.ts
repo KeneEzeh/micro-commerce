@@ -16,6 +16,6 @@ export class OrderItem {
   @Column()
   quantity: number;
 
-  @Column("real") // SQLite: real, Postgres: decimal(10,2)
-  price: number; // snapshot at checkout
+  @Column("real")
+  price: number;
 }
