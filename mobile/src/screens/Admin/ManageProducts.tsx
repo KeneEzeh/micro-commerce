@@ -8,29 +8,29 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-import axios from "axios";
+import api from "../../api/client";
 import { useAuth } from "../../context/AuthContext";
-
-const API_URL = "http://YOUR-IP:3000"; // replace with your server IP
 
 export default function ManageProducts() {
   const { userToken } = useAuth();
   const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // form state
   const [title, setTitle] = useState("");
   const [price, setPrice] = useState("");
   const [inventory, setInventory] = useState("");
+  const [description, setDescription] = useState("");
   const [editingProduct, setEditingProduct] = useState<any | null>(null);
 
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const res = await axios.get(`${API_URL}/products`, {
+      const res = await api.get("/products", {
         headers: { Authorization: `Bearer ${userToken}` },
       });
-      setProducts(res.data);
+      if (res.data.data.length) {
+        setProducts(res.data.data);
+      }
     } catch (err) {
       console.error(err);
       Alert.alert("Error", "Failed to fetch products");
@@ -47,17 +47,17 @@ export default function ManageProducts() {
     try {
       if (editingProduct) {
         // update product
-        await axios.patch(
-          `${API_URL}/products/${editingProduct.id}`,
+        await api.put(
+          `/products/${editingProduct.id}`,
           { title, price: +price, inventory: +inventory },
           { headers: { Authorization: `Bearer ${userToken}` } }
         );
         Alert.alert("Updated", "Product updated successfully");
       } else {
         // create product
-        await axios.post(
-          `${API_URL}/products`,
-          { title, price: +price, inventory: +inventory },
+        await api.post(
+          `/products`,
+          { title, description, price: +price, inventory: +inventory },
           { headers: { Authorization: `Bearer ${userToken}` } }
         );
         Alert.alert("Created", "Product created successfully");
@@ -73,7 +73,7 @@ export default function ManageProducts() {
 
   const handleDelete = async (id: string) => {
     try {
-      await axios.delete(`${API_URL}/products/${id}`, {
+      await api.delete(`/products/${id}`, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
       setProducts((prev) => prev.filter((p) => p.id !== id));
@@ -89,6 +89,7 @@ export default function ManageProducts() {
     setTitle(product.title);
     setPrice(product.price.toString());
     setInventory(product.inventory.toString());
+    setDescription(product.description.toString());
   };
 
   const resetForm = () => {
@@ -96,6 +97,7 @@ export default function ManageProducts() {
     setTitle("");
     setPrice("");
     setInventory("");
+    setDescription("");
   };
 
   useEffect(() => {
@@ -113,6 +115,12 @@ export default function ManageProducts() {
         placeholder="Title"
         value={title}
         onChangeText={setTitle}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Description"
+        value={description}
+        onChangeText={setDescription}
       />
       <TextInput
         style={styles.input}

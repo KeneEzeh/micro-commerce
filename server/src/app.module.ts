@@ -10,7 +10,7 @@ import { OrdersModule } from "./orders/orders.module";
 @Module({
   imports: [
     ConfigModule.forRoot({
-      isGlobal: true, // makes env variables available everywhere
+      isGlobal: true,
     }),
     TypeOrmModule.forRoot({
       type: "sqlite",

@@ -68,6 +68,7 @@ export class OrdersService {
           quantity: cart.quantity,
           price: product.price,
         });
+
         orderItems.push(orderItem);
       }
 
@@ -79,7 +80,6 @@ export class OrdersService {
 
       const savedOrder = await queryRunner.manager.save(order);
 
-      // clear cart after successful order
       await queryRunner.manager.delete(
         CartItem,
         carts.map((c) => c.id)
@@ -99,6 +99,12 @@ export class OrdersService {
   async getOrders(userId: string) {
     return await this.repo.find({
       where: { user: { id: userId } },
+      relations: ["items"],
+    });
+  }
+
+  async getAllOrders() {
+    return await this.repo.find({
       relations: ["items"],
     });
   }

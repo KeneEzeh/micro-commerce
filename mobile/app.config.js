@@ -2,7 +2,7 @@ import "dotenv/config";
 
 export default {
   expo: {
-    name: "micr-commerce",
+    name: "micro-commerce",
     slug: "micro-commerce",
     version: "1.0.0",
     orientation: "portrait",

@@ -22,7 +22,10 @@ export class Order {
   @Column("int")
   total: number;
 
-  @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
+  @OneToMany(() => OrderItem, (item) => item.order, {
+    cascade: true,
+    eager: true,
+  })
   items: OrderItem[];
 
   @Column({ type: "datetime", default: () => "CURRENT_TIMESTAMP" })

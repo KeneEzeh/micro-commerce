@@ -11,7 +11,7 @@ export default function ManageOrders() {
   const fetchOrders = async () => {
     try {
       setLoading(true);
-      const res = await api.get(`/orders`, {
+      const res = await api.get(`/orders/admin`, {
         headers: { Authorization: `Bearer ${userToken}` },
       });
       setOrders(res.data);
@@ -60,9 +60,9 @@ export default function ManageOrders() {
             </Text>
             <Text>Customer: {item.user?.email || "N/A"}</Text>
             <Text>Items: {item.items?.length}</Text>
-            {item.status !== "fulfilled" && (
+            {/* {item.status !== "fulfilled" && (
               <Button title="Fulfill" onPress={() => fulfillOrder(item.id)} />
-            )}
+            )} */}
           </View>
         )}
       />

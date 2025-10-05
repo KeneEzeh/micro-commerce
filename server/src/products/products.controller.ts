@@ -32,6 +32,7 @@ export class ProductsController {
       search,
       category
     );
+    // console.log("Hrre..", res);
     return res;
   }
 

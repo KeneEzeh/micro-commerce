@@ -7,10 +7,8 @@ describe("Orders E2E", () => {
   beforeAll(async () => {
     app = await createTestApp();
 
-    // login as admin to create product
     adminToken = await loginAsAdmin(app);
 
-    // create a product for ordering
     const productRes = await request(app.getHttpServer())
       .post("/products")
       .set("Authorization", `Bearer ${adminToken}`)

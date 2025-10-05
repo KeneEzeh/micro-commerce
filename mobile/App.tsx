@@ -80,6 +80,7 @@ function AdminStack() {
 function AppNavigator() {
   const { userToken, isAdmin, loading } = useAuth();
 
+  console.log("isAdmin...", isAdmin);
   if (loading) {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>

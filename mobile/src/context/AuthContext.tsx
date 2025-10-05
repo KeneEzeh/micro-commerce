@@ -35,7 +35,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const loadToken = async () => {
       const token = await AsyncStorage.getItem("token");
-      if (token) setUserToken(token);
+      if (token) {
+        setUserToken(token);
+        const decoded: DecodedToken = jwtDecode(token);
+        setIsAdmin(decoded.isAdmin);
+      }
       setLoading(false);
     };
     loadToken();
@@ -45,6 +49,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setUserToken(token);
     await AsyncStorage.setItem("token", token);
     const decoded: DecodedToken = jwtDecode(token);
+    console.log("Logged in user", decoded);
     setIsAdmin(decoded.isAdmin);
   };
 

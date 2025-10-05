@@ -8,7 +8,6 @@ const BACKEND = process.env.BACKEND_URL;
 
 const api = axios.create({ baseURL: Constants.expoConfig.extra.backendUrl });
 
-// Request interceptor
 api.interceptors.request.use(async (config) => {
   const token = await AsyncStorage.getItem("token");
   if (token) {
@@ -22,16 +21,16 @@ api.interceptors.request.use(async (config) => {
     config.headers.Authorization = `Bearer ${token}`;
   }
 
-  console.log("Request:", config.method, config.url, config.data);
+  //   console.log("Request:", config.method, config.url, config.data);
   return config;
 });
 
-// Response interceptor
 api.interceptors.response.use(
   (response) => {
     return response;
   },
   (error) => {
+    // console.log(error);
     console.error(
       "Axios error:",
       error.response?.status,

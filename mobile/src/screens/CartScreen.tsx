@@ -4,6 +4,17 @@ import api from "../api/client";
 
 export default function CartScreen() {
   const [items, setItems] = useState([]);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await api.delete(`/cart/${id}`, {});
+      fetch();
+      alert("Item Deleted from Cart");
+    } catch (error) {
+      alert("failed to delete item from cart");
+    }
+  };
+
   useEffect(() => {
     fetch();
   }, []);
@@ -29,17 +40,7 @@ export default function CartScreen() {
             <Text>
               {item.product.title} x {item.quantity}
             </Text>
-            <Button
-              title="Delete"
-              onPress={async () => {
-                const itemsForOrder = items.map((i) => ({
-                  productId: i.product.id,
-                  qty: i.quantity,
-                }));
-                await api.delete(`/cart/${item.id}`, {});
-                alert("Item Deleted from Cart");
-              }}
-            />
+            <Button title="Delete" onPress={() => handleDelete(item.id)} />
           </View>
         )}
       />
