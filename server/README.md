@@ -15,7 +15,7 @@
 
 ## Seed
 
-Run `npm run seed` to create an admin user (admin@example.com / Admin123!) and demo products.
+Run `npm run seed` to create an admin user (with details: Email : "admin@example.com", Password: "Admin123!") and demo products.
 
 ## API Endpoints
 

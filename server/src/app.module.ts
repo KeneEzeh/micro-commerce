@@ -14,7 +14,7 @@ import { OrdersModule } from "./orders/orders.module";
     }),
     TypeOrmModule.forRoot({
       type: "sqlite",
-      database: "db.sqlite",
+      database: process.env.DB_PATH,
       entities: [__dirname + "/**/*.entity{.ts,.js}"],
       synchronize: true,
     }),
